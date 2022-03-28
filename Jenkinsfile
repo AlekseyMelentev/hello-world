@@ -1,7 +1,6 @@
 pipeline {
   environment {
     imagename = "alekseymelentev/hello-world"
-    registryCredential=''
     dockerImage = ''
   }
   agent any
@@ -22,7 +21,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( 'http://nexus', registryCredential ) {
+          docker.withRegistry( 'http://nexus' ) {
             dockerImage.push("$BUILD_NUMBER")
             dockerImage.push('latest')
           }
