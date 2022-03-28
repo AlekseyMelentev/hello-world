@@ -21,19 +21,17 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( 'http://nexus.example.com:8283' ) {
-            dockerImage.push("$BUILD_NUMBER")
-            dockerImage.push('latest')
-          }
+            docker.withRegistry( 'http://nexus.example.com:8283', 'nexus_creds' ) {
+                dockerImage.push("$BUILD_NUMBER")
+                dockerImage.push('latest')
+            }
         }
       }
     }
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $imagename:$BUILD_NUMBER"
         sh "docker rmi $imagename:latest"
       }
     }
   }
 }
-
