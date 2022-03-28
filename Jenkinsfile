@@ -21,7 +21,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( 'http://nexus:8283' ) {
+          docker.withRegistry( 'http://nexus.example.com:8283' ) {
             dockerImage.push("$BUILD_NUMBER")
             dockerImage.push('latest')
           }
